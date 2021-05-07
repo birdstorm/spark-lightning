@@ -12,7 +12,7 @@
     <artifactId>tispark-core-internal</artifactId>
     <packaging>jar</packaging>
     <name>TiSpark Project Core Internal</name>
-    <url>http://github.copm/pingcap/tispark</url>
+    <url>https://github.copm/pingcap/tispark</url>
 
     <properties>
         <scalaj.version>2.3.0</scalaj.version>

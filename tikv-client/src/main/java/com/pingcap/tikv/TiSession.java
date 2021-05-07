@@ -22,6 +22,8 @@ import com.pingcap.tikv.event.CacheInvalidateEvent;
 import com.pingcap.tikv.exception.TiClientInternalException;
 import com.pingcap.tikv.exception.TiKVException;
 import com.pingcap.tikv.key.Key;
+import com.pingcap.tikv.lightning.ImportKVClient;
+import com.pingcap.tikv.lightning.ImportSSTClient;
 import com.pingcap.tikv.meta.TiTimestamp;
 import com.pingcap.tikv.region.RegionManager;
 import com.pingcap.tikv.region.RegionStoreClient;
@@ -125,6 +127,14 @@ public class TiSession implements AutoCloseable {
       }
     }
     return res;
+  }
+
+  public ImportKVClient getImportKVClient() {
+    return ImportKVClient.create(this.getConf(), channelFactory);
+  }
+
+  public ImportSSTClient getImportSSTClient() {
+    return ImportSSTClient.createImportSSTClient(this.getConf(), channelFactory);
   }
 
   public Catalog getCatalog() {

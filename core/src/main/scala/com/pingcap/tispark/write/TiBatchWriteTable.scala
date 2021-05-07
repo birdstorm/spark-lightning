@@ -18,24 +18,14 @@ package com.pingcap.tispark.write
 import java.util
 import com.pingcap.tikv.allocator.RowIDAllocator
 import com.pingcap.tikv.codec.{CodecDataOutput, TableCodec}
-import com.pingcap.tikv.exception.{
-  ConvertOverflowException,
-  TiBatchWriteException,
-  TiDBConvertException
-}
+import com.pingcap.tikv.exception.{ConvertOverflowException, TiBatchWriteException, TiDBConvertException}
 import com.pingcap.tikv.key.{Handle, IndexKey, IntHandle, RowKey}
 import com.pingcap.tikv.meta._
 import com.pingcap.tikv.region.TiRegion
 import com.pingcap.tikv.row.ObjectRowImpl
 import com.pingcap.tikv.types.DataType.EncodeType
 import com.pingcap.tikv.types.IntegerType
-import com.pingcap.tikv.{
-  BytePairWrapper,
-  TiBatchWriteUtils,
-  TiConfiguration,
-  TiDBJDBCClient,
-  TiSession
-}
+import com.pingcap.tikv.{BytePairWrapper, TiBatchWriteUtils, TiConfiguration, TiDBJDBCClient, TiSession}
 import com.pingcap.tispark.TiTableReference
 import com.pingcap.tispark.utils.TiUtil
 import org.apache.spark.SparkContext

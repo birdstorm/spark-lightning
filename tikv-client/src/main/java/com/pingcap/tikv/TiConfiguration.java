@@ -50,7 +50,8 @@ public class TiConfiguration implements Serializable {
   private static final boolean DEF_SHOW_ROWID = false;
   private static final String DEF_DB_PREFIX = "";
   private static final boolean DEF_WRITE_ENABLE = true;
-  private static final boolean DEF_WRITE_ALLOW_SPARK_SQL = false;
+  private static final boolean DEF_BATCH_WRITE_ALLOW_SPARK_SQL = false;
+  private static final boolean DEF_TILIGHTNING_WRITE_ALLOW_SPARK_SQL = false;
   private static final boolean DEF_WRITE_WITHOUT_LOCK_TABLE = false;
   private static final int DEF_TIKV_REGION_SPLIT_SIZE_IN_MB = 96;
   private static final int DEF_PARTITION_PER_SPLIT = 1;
@@ -64,6 +65,7 @@ public class TiConfiguration implements Serializable {
   private boolean truncateAsWarning = DEF_TRUNCATE_AS_WARNING;
   private int maxFrameSize = DEF_MAX_FRAME_SIZE;
   private List<URI> pdAddrs = new ArrayList<>();
+  private List<URI> importerAddrs = new ArrayList<>();
   private int indexScanBatchSize = DEF_INDEX_SCAN_BATCH_SIZE;
   private int downgradeThreshold = DEF_REGION_SCAN_DOWNGRADE_THRESHOLD;
   private int indexScanConcurrency = DEF_INDEX_SCAN_CONCURRENCY;
@@ -74,7 +76,8 @@ public class TiConfiguration implements Serializable {
   private boolean showRowId = DEF_SHOW_ROWID;
   private String dbPrefix = DEF_DB_PREFIX;
 
-  private boolean writeAllowSparkSQL = DEF_WRITE_ALLOW_SPARK_SQL;
+  private boolean batchWriteAllowSparkSQL = DEF_BATCH_WRITE_ALLOW_SPARK_SQL;
+  private boolean tilightningWriteAllowSparkSQL = DEF_TILIGHTNING_WRITE_ALLOW_SPARK_SQL;
   private boolean writeEnable = DEF_WRITE_ENABLE;
   private boolean writeWithoutLockTable = DEF_WRITE_WITHOUT_LOCK_TABLE;
   private int tikvRegionSplitSizeInMB = DEF_TIKV_REGION_SPLIT_SIZE_IN_MB;
@@ -83,6 +86,14 @@ public class TiConfiguration implements Serializable {
   private int kvClientConcurrency = DEF_KV_CLIENT_CONCURRENCY;
 
   private List<TiStoreType> isolationReadEngines = DEF_ISOLATION_READ_ENGINES;
+
+  public static TiConfiguration createDefault(String pdAddrsStr, String importerAddrsStr) {
+    Objects.requireNonNull(pdAddrsStr, "pdAddrsStr is null");
+    TiConfiguration conf = new TiConfiguration();
+    conf.importerAddrs = strToURI(importerAddrsStr);
+    conf.pdAddrs = strToURI(pdAddrsStr);
+    return conf;
+  }
 
   public static TiConfiguration createDefault(String pdAddrsStr) {
     Objects.requireNonNull(pdAddrsStr, "pdAddrsStr is null");
@@ -255,12 +266,24 @@ public class TiConfiguration implements Serializable {
     this.writeWithoutLockTable = writeWithoutLockTable;
   }
 
-  public boolean isWriteAllowSparkSQL() {
-    return writeAllowSparkSQL;
+  public boolean isBatchWriteAllowSparkSQL() {
+    return batchWriteAllowSparkSQL;
   }
 
-  public void setWriteAllowSparkSQL(boolean writeAllowSparkSQL) {
-    this.writeAllowSparkSQL = writeAllowSparkSQL;
+  public void setBatchWriteAllowSparkSQL(boolean batchWriteAllowSparkSQL) {
+    this.batchWriteAllowSparkSQL = batchWriteAllowSparkSQL;
+  }
+
+  public boolean isTilightningWriteAllowSparkSQL() {
+    return tilightningWriteAllowSparkSQL;
+  }
+
+  public void setTilightningWriteAllowSparkSQL(boolean tilightningWriteAllowSparkSQL) {
+    this.tilightningWriteAllowSparkSQL = tilightningWriteAllowSparkSQL;
+  }
+
+  public List<URI> getImporterAddrs() {
+    return importerAddrs;
   }
 
   public int getTikvRegionSplitSizeInMB() {

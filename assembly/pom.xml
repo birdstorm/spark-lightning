@@ -12,7 +12,7 @@
     <artifactId>tispark-assembly</artifactId>
     <packaging>pom</packaging>
     <name>TiSpark Project Assembly</name>
-    <url>http://github.copm/pingcap/tispark</url>
+    <url>https://github.com/birdstorm/spark-lightning</url>
 
     <dependencies>
         <dependency>
